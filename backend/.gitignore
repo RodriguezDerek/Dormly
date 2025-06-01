@@ -36,3 +36,6 @@ build/
 HELP.md
 mvnw.cmd
 mvnw
+
+*.DS_Store
+derek_accessKeys.csv
