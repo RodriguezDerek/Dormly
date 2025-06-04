@@ -25,8 +25,8 @@ public class ChecklistController {
         return ResponseEntity.status(HttpStatus.OK).body(checklistService.getAllChecklists());
     }
 
-    @DeleteMapping("/checklists/{name}")
-    public ResponseEntity<?> deleteChecklist(String name){
-        return ResponseEntity.status(HttpStatus.OK).body(checklistService.deleteChecklist(name));
+    @DeleteMapping("/checklists/{id}")
+    public ResponseEntity<?> deleteChecklist(Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(checklistService.deleteChecklist(id));
     }
 }

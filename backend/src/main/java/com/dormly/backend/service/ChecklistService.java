@@ -42,8 +42,8 @@ public class ChecklistService {
                 .build();
     }
 
-    public GenericResponse deleteChecklist(String name) {
-        Optional<Checklist> optionalChecklist = checklistRepository.findByName(name);
+    public GenericResponse deleteChecklist(Long id) {
+        Optional<Checklist> optionalChecklist = checklistRepository.findById(id);
 
         if(optionalChecklist.isPresent()){
             checklistRepository.delete(optionalChecklist.get());
