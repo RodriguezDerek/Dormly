@@ -1,8 +1,8 @@
 import React from 'react';
-
-function UploadChecklist(){
+ 
+function UploadChecklistModal({ onClose }){
     return (
         <>
         </>
     );
-} export default UploadChecklist;
+} export default UploadChecklistModal;

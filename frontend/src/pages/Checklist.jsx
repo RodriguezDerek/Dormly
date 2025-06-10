@@ -1,14 +1,8 @@
 import React from 'react';
-import ViewChecklistModal from '../components/ViewChecklistModal';
-import CreateChecklistModal from '../components/CreateChecklistModal';
+import ChecklistContent from '../components/ChecklistContent';
 
 function Checklist() {
   return (
-    <div className="checklist">
-      <h1>Checklist</h1>
-      <p>This is the checklist page.</p>
-      <ViewChecklistModal />
-      <CreateChecklistModal />
-    </div>
+    <ChecklistContent/>
   );
 } export default Checklist;
