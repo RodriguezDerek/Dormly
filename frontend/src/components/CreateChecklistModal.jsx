@@ -1,12 +1,15 @@
 import React from 'react';
 
 function CreateChecklistModal({ onClose }) {
+
   function handleCreateChecklist() {
     console.log("Create Checklist button clicked");
   }
+  
   function handleSubmitChange(event) {
     console.log("Submit button clicked", event.target.value);
   }
+  
   return (
     <div className="bg-white rounded-3xl border-2 border-gray-400 p-6 shadow-lg w-full max-w-md mx-4 sm:mx-auto">
         <h1 className="text-center text-xl font-bold mb-6 font-[K2D]">Create New Checklist</h1>

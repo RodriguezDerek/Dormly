@@ -2,10 +2,12 @@ import React from 'react';
 
 function ViewChecklistModal({ onClose }) {
 
+  // Will Call /api/v1/aws/download
   function handleDownload() {
     console.log("Download button clicked");
   }
 
+  // Will Call /api/v1/aws/delete
   function handleDelete() {
     console.log("Delete button clicked");
   }
