@@ -26,7 +26,7 @@ public class ChecklistController {
     }
 
     @DeleteMapping("/checklists/{id}")
-    public ResponseEntity<?> deleteChecklist(Long id){
+    public ResponseEntity<?> deleteChecklist(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(checklistService.deleteChecklist(id));
     }
 }
