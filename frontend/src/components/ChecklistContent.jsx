@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ViewChecklistModal from "./ViewChecklistModal";
 import UploadChecklistModal from "./UploadChecklistModal";
 import CreateChecklistModal from "./CreateChecklistModal";
@@ -6,6 +6,24 @@ import ChecklistTable from "./ChecklistTable";
 
 function ChecklistContent(){
     const [openModal, setOpenModal]  = useState(null);  // 'view' | 'upload' | 'add' | null
+    const [checklists, setChecklists] = useState(null); 
+
+    async function fetchChecklists() {
+        try{
+            const response = await fetch("http://localhost:8080/api/v1/checklist/checklists");
+            if(response.ok){
+                const data = await response.json();
+                setChecklists(data.checklistList);
+            }
+
+        } catch (error) {
+            console.error("Error fetching checklists:", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchChecklists();
+    }, []);
 
     return(
         <div className="custom-bg-color flex flex-col items-center justify-center min-h-screen p-8 space-y-6">
@@ -27,7 +45,16 @@ function ChecklistContent(){
                 {openModal === 'add' && <CreateChecklistModal onClose={() => setOpenModal(null)} />}
             </div>
             
-            <ChecklistTable checklistName={"Dorm Essentials"} items={null} />
+            {checklists && checklists.length > 0 ? (
+                <div className="mt-8 space-y-4 fade-scale-in">
+                    {checklists.map((checklist, index) => (
+                        <ChecklistTable checklistID={checklist.id} checklistName={checklist.name} items={checklist.items} key={index}/>
+                    ))}
+                </div>
+            ) : (
+                <p className="mt-8 text-gray-500 fade-scale-in">No checklists available. Start by adding or uploading one!</p>
+            )}
+
         </div>
 
     );

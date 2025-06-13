@@ -1,13 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function CreateChecklistModal({ onClose }) {
+  const [checklistName, setChecklistName] = useState(""); // Placeholder for any state if needed
 
-  function handleCreateChecklist() {
-    console.log("Create Checklist button clicked");
+  async function handleCreateChecklist() {
+    try {
+      if(checklistName.trim() === "") {
+        alert("Please enter a checklist name.");
+        return;
+      }
+    
+    const response = await fetch("http://localhost:8080/api/v1/checklist/checklists", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: checklistName }),
+    });
+
+    if(response.ok){
+      const data = await response.json();
+      console.log("Checklist created successfully:", data);
+      alert(data.message || "Checklist created successfully!");
+      window.location.reload();
+    }
+
+    } catch (error) {
+      console.error("Error creating checklist:", error);
+    }
   }
   
-  function handleSubmitChange(event) {
-    console.log("Submit button clicked", event.target.value);
+  function handleInputChange(event) {
+    setChecklistName(event.target.value);
   }
   
   return (
@@ -18,14 +42,13 @@ function CreateChecklistModal({ onClose }) {
 
             <h2 className="text-sm font-semibold text-gray-700 mb-2">Checklist Name</h2>
             <div className="flex gap-2">
-                <input type="text" placeholder="Enter checklist name" className="border-2 border-gray-300 rounded-lg p-2 w-full"/>
-                <button onClick={handleSubmitChange} type="button" className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition cursor-pointer">Submit</button>
+                <input value={checklistName} onChange={handleInputChange} type="text" placeholder="Enter checklist name" className="border-2 border-gray-300 rounded-lg p-2 w-full"/>
             </div>
         
         </div>
         
         <div className="flex justify-between">
-            <button onClick={handleCreateChecklist} type="button" className="bg-[#F15A24] text-white px-5 py-2 rounded-full hover:bg-orange-700 transition cursor-pointer">Create →</button>
+            <button onClick={handleCreateChecklist} type="button" className="bg-[#F15A24] text-white px-5 py-2 mr-4 rounded-full hover:bg-orange-700 transition cursor-pointer">Create →</button>
             <button onClick={onClose} type="button" className="bg-purple-700 text-white px-5 py-2 rounded-full hover:bg-purple-800 transition cursor-pointer">Cancel ✕</button>
         
         </div>

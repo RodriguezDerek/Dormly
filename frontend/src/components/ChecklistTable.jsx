@@ -2,31 +2,40 @@ import React, { useState } from 'react';
 import Item from './Item';
 import CreateItemModal from './CreateItemModal';
 
-function ChecklistTable ({ checklistName, items }){
+function ChecklistTable ({ checklistID ,checklistName, items }){
     const [isAddItemModalOpen, setAddItemModalOpen] = useState(false);
-
-    function handleAddItem() {
-        // Logic to add a new item to the checklist
-        setAddItemModalOpen(true);
-        console.log("Add Item clicked");
-    }
  
-    function handleDeleteChecklist() {
-        // Logic to delete the checklist
-        console.log("Delete Checklist clicked");
+    async function handleDeleteChecklist() {
+        console.log("Deleting checklist with ID:", checklistID);
+        try {
+            const response = await fetch(`http://localhost:8080/api/v1/checklist/checklists/${checklistID}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if(response.ok){
+                const data = await response.json();
+                alert(data.message || "Checklist deleted successfully!");
+                window.location.reload();
+            }
+
+        } catch (error) {
+            console.error("Error deleting checklist:", error);
+        }
     }
 
     return (
         <>
-        {isAddItemModalOpen && <CreateItemModal onClose={() => setAddItemModalOpen(false)} />}
-
         <div className="bg-[#e3eff1] p-6 rounded-3xl max-w-5xl w-full mx-auto fade-scale-in">
+            {isAddItemModalOpen && <CreateItemModal onClose={() => setAddItemModalOpen(false)} />}
             <table className="w-full border-collapse rounded-3xl overflow-hidden">
                 <thead>
                     <tr className="bg-white border-b">
                         <th className="text-left font-semibold text-lg px-4 py-3">{checklistName}</th>
                         <th className="text-right px-4 py-3">
-                        <button onClick={handleAddItem} className="flex items-center text-black font-semibold cursor-pointer hover:text-blue-600 float-right">
+                        <button onClick={() => setAddItemModalOpen(true)} className="flex items-center text-black font-semibold cursor-pointer hover:text-blue-600 float-right">
                             <span className="text-xl mr-1">+</span> Add Item
                         </button>
                         </th>
