@@ -20,12 +20,12 @@ public class ItemController {
         return ResponseEntity.status(HttpStatus.CREATED).body(itemService.createItem(request.getName(), request.getChecklistId()));
     }
 
-    @PutMapping("/items/{id}")
+    @PutMapping("/items/{itemId}")
     public ResponseEntity<?> updateItem(@PathVariable Long itemId, @RequestParam String name){
         return ResponseEntity.status(HttpStatus.OK).body(itemService.updateItem(itemId, name));
     }
 
-    @DeleteMapping("items/{id}")
+    @DeleteMapping("items/{itemId}")
     public ResponseEntity<?> deleteItem(@PathVariable Long itemId){
         return ResponseEntity.status(HttpStatus.OK).body(itemService.deleteItem(itemId));
     }
