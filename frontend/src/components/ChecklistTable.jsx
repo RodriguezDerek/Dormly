@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import Item from './Item';
 import CreateItemModal from './CreateItemModal';
 
-function ChecklistTable ({ checklistID ,checklistName, items }){
+function ChecklistTable ({ checklistID , checklistName, items }){
     const [isAddItemModalOpen, setAddItemModalOpen] = useState(false);
- 
+  
     async function handleDeleteChecklist() {
         console.log("Deleting checklist with ID:", checklistID);
         try {
@@ -29,8 +29,8 @@ function ChecklistTable ({ checklistID ,checklistName, items }){
     return (
         <>
         <div className="bg-[#e3eff1] p-6 rounded-3xl max-w-5xl w-full mx-auto fade-scale-in">
-            {isAddItemModalOpen && <CreateItemModal onClose={() => setAddItemModalOpen(false)} />}
-            <table className="w-full border-collapse rounded-3xl overflow-hidden">
+            {isAddItemModalOpen && <CreateItemModal onClose={() => setAddItemModalOpen(false)} checklistTableId = {checklistID}/>}
+            <table className="w-[800px] border-collapse rounded-3xl overflow-hidden">
                 <thead>
                     <tr className="bg-white border-b">
                         <th className="text-left font-semibold text-lg px-4 py-3">{checklistName}</th>
@@ -44,8 +44,8 @@ function ChecklistTable ({ checklistID ,checklistName, items }){
 
                 <tbody className="bg-white h-64">
                     {items && items.length > 0 ? (
-                        items.map((item, index) => (
-                            <Item key={index} itemName={item} />
+                        items.map((item) => (
+                            <Item key={item.id} itemName={item.name} itemID={item.id}/>
                         )) 
                     ) : (
                         <tr className="border-b">

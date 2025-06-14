@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function CreateChecklistModal({ onClose }) {
-  const [checklistName, setChecklistName] = useState(""); // Placeholder for any state if needed
+  const [checklistName, setChecklistName] = useState(""); 
 
   async function handleCreateChecklist() {
     try {
