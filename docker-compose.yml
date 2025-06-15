@@ -17,7 +17,7 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/dormly_db
       - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=Keredsql26
+      - SPRING_DATASOURCE_PASSWORD=password
     depends_on:
       - db
     networks:
@@ -27,7 +27,7 @@ services:
     image: postgres:14
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=Keredsql26
+      - POSTGRES_PASSWORD=password
       - POSTGRES_DB=dormly_db
     volumes:
       - pgdata:/var/lib/postgresql/data
