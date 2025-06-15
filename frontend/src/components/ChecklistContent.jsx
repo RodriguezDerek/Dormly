@@ -7,6 +7,7 @@ import ChecklistTable from "./ChecklistTable";
 function ChecklistContent(){
     const [openModal, setOpenModal]  = useState(null);  // 'view' | 'upload' | 'add' | null
     const [checklists, setChecklists] = useState(null); 
+    const [checklistFiles, setChecklistFiles] = useState(null);
 
     async function fetchChecklists() {
         try{
@@ -21,8 +22,23 @@ function ChecklistContent(){
         }
     }
 
+    async function fetchChecklistFiles() {
+        try{
+            const response = await fetch("http://localhost:8080/api/v1/aws/files");
+            if(response.ok){
+                const data = await response.json();
+                setChecklistFiles(data);
+                console.log("Fetched checklist files:", data);
+            }
+
+        } catch (error) {
+            alert("Error fetching checklist files: " + error.message);
+        }
+    }
+
     useEffect(() => {
         fetchChecklists();
+        fetchChecklistFiles();
     }, []);
 
     return(
@@ -40,7 +56,7 @@ function ChecklistContent(){
             </div>
 
             <div>
-                {openModal === 'view' && <ViewChecklistModal onClose={() => setOpenModal(null)} />}
+                {openModal === 'view' && <ViewChecklistModal onClose={() => setOpenModal(null)} files = {checklistFiles} />}
                 {openModal === 'upload' && <UploadChecklistModal onClose={() => setOpenModal(null)} />}
                 {openModal === 'add' && <CreateChecklistModal onClose={() => setOpenModal(null)} />}
             </div>
