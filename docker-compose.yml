@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - dormly_net
+
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/dormly_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=Keredsql26
+    depends_on:
+      - db
+    networks:
+      - dormly_net
+
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Keredsql26
+      - POSTGRES_DB=dormly_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - dormly_net
+
+volumes:
+  pgdata:
+
+networks:
+  dormly_net:
